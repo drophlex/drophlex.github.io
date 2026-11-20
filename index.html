@@ -572,12 +572,15 @@ const degToMidi = (deg, oct = 0) => { const sc = station.scale, n = sc.length; c
 const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
 
 function buildGraph() {
-  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  try { ctx = new AC({ latencyHint: 'playback' }); } catch { ctx = new AC(); }
   const g = (v = 1) => { const n = ctx.createGain(); n.gain.value = v; return n; };
   const master = g(0), comp = ctx.createDynamicsCompressor();
   comp.threshold.value = -16; comp.ratio.value = 3; comp.attack.value = .01; comp.release.value = .25;
   const analyser = ctx.createAnalyser(); analyser.fftSize = 1024;
-  master.connect(comp); comp.connect(analyser); analyser.connect(ctx.destination);
+  const lim = ctx.createDynamicsCompressor(); lim.threshold.value = -2; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = .002; lim.release.value = .1;
+  const out = g(.85);
+  master.connect(comp); comp.connect(lim); lim.connect(out); out.connect(analyser); analyser.connect(ctx.destination);
   const tone = ctx.createBiquadFilter(); tone.type = 'lowpass'; tone.Q.value = .5;
   const bus = g(1); bus.connect(tone); tone.connect(master);
   // reverb
@@ -597,7 +600,7 @@ function buildGraph() {
   const padLfo = ctx.createOscillator(), padLfoG = g(300); padLfo.frequency.value = .07; padLfo.connect(padLfoG); padLfoG.connect(padF.frequency); padLfo.start();
   const pad = [0, 4, 8].map(() => { const oscs = [-1, 1].map(s => { const o = ctx.createOscillator(); o.type = 'sawtooth'; o.detune.value = s * 7; o.connect(padF); o.start(); return o; }); return oscs; });
   const noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate); { const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
-  nodes = { master, tone, bus, rev, revOut, dly, dOut, fb, wowG, drums, padF, padG, pad, noise, analyser, buf: new Float32Array(analyser.fftSize) };
+  window.__pslAnalyser = analyser; nodes = { master, tone, bus, rev, revOut, dly, dOut, fb, wowG, drums, padF, padG, pad, noise, analyser, buf: new Float32Array(analyser.fftSize) };
   applyParams(true);
 }
 
@@ -607,7 +610,7 @@ function applyParams(instant) {
   nodes.tone.frequency.setTargetAtTime(260 * Math.pow(2, P.tone * 5.2), t, tc);
   nodes.revOut.gain.setTargetAtTime(station.rev, t, .3);
   nodes.dOut.gain.setTargetAtTime(station.dly * (.6 + P.drift * .6), t, .3);
-  nodes.dly.delayTime.setTargetAtTime(Math.min(1.9, stepDur() * 3), t, .2);
+  nodes.dly.delayTime.setTargetAtTime(Math.min(1.9, stepDur() * 3), t, .8);
   nodes.wowG.gain.setTargetAtTime(.0008 + P.drift * .006, t, .3);
   nodes.padG.gain.setTargetAtTime(.022 * station.pad, t, .8);
   nodes.padF.frequency.setTargetAtTime(380 + P.tone * 1500, t, .5);
@@ -620,7 +623,10 @@ function setPadChord(t) {
   nodes.pad.forEach((pair, i) => pair.forEach((o, k) => o.frequency.setTargetAtTime(mtof(degToMidi(degs[i], -1 + (i === 0 ? 0 : 0))), t, .9)));
 }
 
+let activeVoices = 0;
+function track(node, end) { activeVoices++; node.onended = () => { activeVoices--; }; }
 function voice(midi, t, vel, pan) {
+  if (activeVoices > 16) return;
   const c = ctx, f = mtof(midi), out = c.createGain(), p = c.createStereoPanner(); p.pan.value = pan;
   out.connect(p); p.connect(nodes.bus); out.gain.value = 0;
   const type = station.voice, drift = P.drift;
@@ -631,12 +637,12 @@ function voice(midi, t, vel, pan) {
     mg.gain.setValueAtTime(f * (type === 'bell' ? 2.2 : 1.1), t); mg.gain.exponentialRampToValueAtTime(f * .02, t + dec * .6);
     mod.connect(mg); mg.connect(car.frequency); car.connect(out);
     out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(.16 * vel, t + (type === 'glass' ? .06 : .004)); out.gain.exponentialRampToValueAtTime(.0005, t + dec);
-    car.start(t); mod.start(t); car.stop(t + dec + .1); mod.stop(t + dec + .1);
+    car.start(t); mod.start(t); car.stop(t + dec + .1); mod.stop(t + dec + .1); track(car);
   } else {
     const o = c.createOscillator(), fl = c.createBiquadFilter(); o.type = 'triangle'; o.frequency.value = f;
     fl.type = 'lowpass'; fl.Q.value = 3; fl.frequency.setValueAtTime(400 + 4000 * P.tone, t); fl.frequency.exponentialRampToValueAtTime(260, t + .35);
-    o.connect(fl); fl.connect(out); out.gain.setValueAtTime(.2 * vel, t); out.gain.exponentialRampToValueAtTime(.0005, t + .7);
-    o.start(t); o.stop(t + .8);
+    o.connect(fl); fl.connect(out); out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(.2 * vel, t + .005); out.gain.exponentialRampToValueAtTime(.0005, t + .7);
+    o.start(t); o.stop(t + .8); track(o);
   }
 }
 function acidNote(midi, t, accent, slide) {
@@ -647,17 +653,17 @@ function acidNote(midi, t, accent, slide) {
   acidPrev = f;
   const base = 180 + P.tone * 700, peak = base + (900 + P.tone * 3800) * (accent ? 1.6 : 1);
   fl.frequency.setValueAtTime(peak, t); fl.frequency.exponentialRampToValueAtTime(base, t + sd * (accent ? 2.2 : 1.4));
-  a.gain.setValueAtTime(accent ? .2 : .13, t); a.gain.setTargetAtTime(0, t + sd * (slide ? 1.05 : .7), .03);
+  a.gain.setValueAtTime(0, t); a.gain.linearRampToValueAtTime(accent ? .2 : .13, t + .003); a.gain.setTargetAtTime(0, t + sd * (slide ? 1.05 : .7), .03);
   o.connect(fl); fl.connect(a); a.connect(nodes.bus); o.start(t); o.stop(t + sd * 2 + .2);
 }
 function kick(t, v = 1) {
   const o = ctx.createOscillator(), a = ctx.createGain(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(44, t + .11);
-  a.gain.setValueAtTime(.85 * v, t); a.gain.exponentialRampToValueAtTime(.001, t + .42); o.connect(a); a.connect(nodes.drums); o.start(t); o.stop(t + .45);
+  a.gain.setValueAtTime(0, t); a.gain.linearRampToValueAtTime(.85 * v, t + .002); a.gain.exponentialRampToValueAtTime(.001, t + .42); o.connect(a); a.connect(nodes.drums); o.start(t); o.stop(t + .45);
 }
 function noiseHit(t, hp, bp, dec, v) {
   const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), a = ctx.createGain();
   s.buffer = nodes.noise; f.type = bp ? 'bandpass' : 'highpass'; f.frequency.value = bp || hp; if (bp) f.Q.value = .9;
-  a.gain.setValueAtTime(v, t); a.gain.exponentialRampToValueAtTime(.001, t + dec);
+  a.gain.setValueAtTime(0, t); a.gain.linearRampToValueAtTime(v, t + .001); a.gain.exponentialRampToValueAtTime(.001, t + dec);
   s.connect(f); f.connect(a); a.connect(nodes.drums); s.start(t, Math.random() * .5); s.stop(t + dec + .02);
 }
 const BREAKS = { k: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], s: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1], h: [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0] };
@@ -695,7 +701,7 @@ function step(t, audible) {
   stepCount++;
 }
 function scheduler() {
-  const now = clock(), ahead = now + (running ? .14 : .02);
+  const now = clock(), ahead = now + (running ? (document.hidden ? 1.2 : .2) : .02);
   if (nextStep < now - .5) nextStep = now;
   while (nextStep < ahead) { step(nextStep, running); nextStep += stepDur(); }
 }
@@ -778,7 +784,7 @@ const knobs = KDEF.map(([key, en, es, def]) => {
 });
 
 /* ───────────── visuals ───────────── */
-const DPR = Math.min(2, window.devicePixelRatio || 1);
+const DPR = Math.min(1.5, window.devicePixelRatio || 1);
 function fit(cv, scale = DPR) { const r = cv.getBoundingClientRect(); const w = Math.max(1, Math.round(r.width * scale)), h = Math.max(1, Math.round(r.height * scale)); if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; } return [w, h]; }
 const visible = new Map();
 const io = new IntersectionObserver(es => es.forEach(e => visible.set(e.target, e.isIntersecting)), { rootMargin: '80px' });
@@ -861,7 +867,7 @@ function drawGroove(t, lv) {
   g.fillStyle = PAPER; g.font = `900 ${Math.round(Rm * .12)}px Archivo`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PSL', cx, cy);
   if (hit > .3 || Math.random() < .01) { // digital slip
     const y0 = Math.floor(Math.random() * H * .8), hh = 2 + Math.floor(Math.random() * 8), dx = Math.round((Math.random() - .5) * 18 * (hit + .3));
-    const img = g.getImageData(0, y0, W, hh); g.putImageData(img, dx, y0);
+    g.drawImage(gLow, 0, y0, W, hh, dx, y0, W, hh);
   }
   const c = cv.getContext('2d'); c.imageSmoothingEnabled = false; c.drawImage(gLow, 0, 0, w, h);
 }
@@ -874,19 +880,21 @@ function drawStars(t) {
 }
 
 const turb2 = $('#turb2'), disp2 = $('#disp2'), logoG = $('#logoG'), turb = $('#turb');
-let tPrev = 0;
+let tPrev = 0, frameN = 0, logoHover = false;
+$('#logo').addEventListener('pointerenter', () => logoHover = true); $('#logo').addEventListener('pointerleave', () => logoHover = false);
 function frame(ms) {
+  frameN++;
   const t = ms / 1000, lv = level();
   if (!reduced || running) {
     if (isVis('#orbit')) drawOrbit(t);
     if (isVis('#wave')) drawWave($('#wave'), t, lv, 18, PAPER, false);
     if ($('#pill').classList.contains('show')) drawWave($('#pillWave'), t, lv, 5, PAPER, true);
-    if (isVis('#groove')) drawGroove(t, lv);
+    if (isVis('#groove') && (frameN % 2 === 0)) drawGroove(t, lv);
     if (isVis('#stars') && ms - tPrev > 60) { drawStars(t); tPrev = ms; }
     // logo breathes with the sound
     const sc = running ? 1 + lv * 14 : 0;
-    if (sc < .3) logoG.removeAttribute('filter'); else { logoG.setAttribute('filter', 'url(#breath)'); disp2.setAttribute('scale', sc.toFixed(2)); turb2.setAttribute('baseFrequency', (0.006 + Math.sin(t * .3) * .002).toFixed(4)); }
-    turb.setAttribute('seed', Math.floor(t * 12) % 50);
+    if (frameN % 4 !== 0 || !isVis('#orbit')) {} else if (sc < .3) logoG.removeAttribute('filter'); else { logoG.setAttribute('filter', 'url(#breath)'); disp2.setAttribute('scale', sc.toFixed(2)); turb2.setAttribute('baseFrequency', (0.006 + Math.sin(t * .3) * .002).toFixed(4)); }
+    if (logoHover && frameN % 3 === 0) turb.setAttribute('seed', Math.floor(t * 12) % 50);
     $$('#lv i').forEach((b, i) => b.classList.toggle('on', lv * 7 > 5 - i));
   }
   requestAnimationFrame(frame);
