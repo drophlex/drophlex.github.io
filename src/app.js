@@ -11,26 +11,30 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const VIDEOS = [
   // { id: 'XXXXXXXXXXX', es: 'Título', en: 'Title' },
 ];
-const GH = 'https://github.com/drophlex/';
+const GH = 'https://github.com/drophlex/', W = 'https://drophlex.github.io/';
 const SOFT = [
   { n: 'ÓRBITA', sub: ['Sintetizador generativo', 'Generative synthesizer'], p: ['Planetas que tocan notas al orbitar. La radio de esta página es su versión mini.', 'Planets that play notes as they orbit. This page’s radio is its mini version.'],
     tags: [['Open source'], ['Web · VST3 · FM-1', 'w']], links: [['Web', 'https://drophlex.github.io/ORBITA/'], ['GitHub', GH + 'ORBITA']] },
   { n: 'ANDRÓMEDA', sub: ['Texturas y espacios', 'Textures & spaces'], p: ['Instrumento ambient con eco de cinta Space Tape y visuales de arte matemático.', 'Ambient instrument with Space Tape echo and mathematical-art visuals.'],
     tags: [['Open source'], ['Web · VST · FM-1', 'w']], links: [['Web', 'https://drophlex.github.io/ANDROMEDA/'], ['GitHub', GH + 'ANDROMEDA'], ['FM-1', GH + 'ANDROMEDAFM1']] },
   { n: 'PULSAR', sub: ['Ritmo / secuencia / FX', 'Rhythm / sequence / FX'], p: ['Caja de ritmos de breaks e IDM.', 'Breaks and IDM drum machine.'],
-    tags: [['Open source'], ['Web · VST · FM-1', 'w']], links: [['GitHub', GH + 'PULSAR']] },
+    tags: [['Open source'], ['Web · VST · FM-1', 'w']], links: [['Web', W + 'PULSAR/'], ['GitHub', GH + 'PULSAR']] },
   { n: 'DFD ACID', sub: ['Sintetizador acid', 'Acid synthesizer'], p: ['Sinte y secuenciador acid con slides y acentos.', 'Acid synth and sequencer with slides and accents.'],
-    tags: [['Lab'], ['Web · VST3 · AU · FM-1', 'w']], links: [['GitHub', GH + 'DFD-ACID-ENGINE']] },
+    tags: [['Lab'], ['Web · VST3 · AU · FM-1', 'w']], links: [['Web', W + 'DFD-ACID-ENGINE/'], ['GitHub', GH + 'DFD-ACID-ENGINE']] },
   { n: 'OMEGA', sub: ['Master / mix bus', 'Master / mix bus'], p: ['Procesador de mastering con loudness BS.1770, pico real y A/B honesto al mismo volumen.', 'Mastering processor with BS.1770 loudness, true peak and honest level-matched A/B.'],
-    tags: [['US$49', 'c'], [['Prueba 15 días', '15-day trial'], 'w']], links: [['GitHub', GH + 'OMEGA'], [['Descargar', 'Download'], GH + 'OMEGA/releases/latest']] },
+    tags: [['US$49', 'c'], [['Prueba 15 días', '15-day trial'], 'w']], links: [['Web', W + 'OMEGA/'], [['Descargar', 'Download'], GH + 'OMEGA/releases/latest'], ['GitHub', GH + 'OMEGA']] },
   { n: 'CONSTELLATION', sub: ['Mezclador 3D / surround', '3D mixer / surround'], p: ['Mezcla moviendo estrellas: desenmascarado espectral, binaural y surround hasta 7.1.4.', 'Mix by moving stars: spectral unmasking, binaural and surround up to 7.1.4.'],
-    tags: [['US$39', 'c'], [['Prueba 30 días', '30-day trial'], 'w']], links: [['GitHub', GH + 'CONSTELLATION'], [['Descargar', 'Download'], GH + 'CONSTELLATION/releases/latest']] },
-  { n: 'DARK FUNK DURCAL', sub: ['Groovebox FM-1', 'FM-1 groovebox'], p: ['Firmware groovebox para el M-VAVE FM-1.', 'Groovebox firmware for the M-VAVE FM-1.'],
-    tags: [['Open source'], ['FM-1', 'w']], links: [['GitHub', GH + 'dark-funk-durcal-synt-fm1']] },
+    tags: [['US$39', 'c'], [['Prueba 30 días', '30-day trial'], 'w']], links: [['Web', W + 'CONSTELLATION/'], [['Descargar', 'Download'], GH + 'CONSTELLATION/releases/latest'], ['GitHub', GH + 'CONSTELLATION']] },
+  { n: 'DARK FUNK DURCAL', sub: ['Groovebox FM-1', 'FM-1 groovebox'], p: ['Groovebox gratis para el navegador, el M-VAVE FM-1 y Ableton.', 'Free groovebox for your browser, the M-VAVE FM-1 and Ableton.'],
+    tags: [['Open source'], ['Web · FM-1', 'w']], links: [['Web', W + 'dark-funk-durcal-synt-fm1/'], ['GitHub', GH + 'dark-funk-durcal-synt-fm1']] },
   { n: 'DFD SYNTH', sub: ['Plug-in de síntesis', 'Synth plug-in'], p: ['El sinte de Dark Funk Durcal como plug-in.', 'The Dark Funk Durcal synth as a plug-in.'],
     tags: [['Open source'], ['VST3', 'w']], links: [['GitHub', GH + 'dfd-synth-plugin']] },
   { n: 'POLARIS ACÚSTICA', sub: ['Medición y análisis', 'Measurement & analysis'], p: ['App de medición acústica de salas: la herramienta de nuestra asesoría.', 'Room acoustic measurement app: the tool behind our consulting.'],
-    tags: [['Open source'], ['App', 'w']], links: [['GitHub', GH + 'polaris-acustica']] },
+    tags: [['Open source'], ['App', 'w']], links: [['Web', W + 'polaris-acustica/'], ['GitHub', GH + 'polaris-acustica']] },
+  { n: 'COSI COSI', sub: ['Juego de sigilo', 'Stealth game'], p: ['El agente secreto más viral de Mérida.', 'Mérida’s most viral secret agent.'],
+    tags: [[['Juego', 'Game']], ['Web', 'w']], links: [[['Jugar', 'Play'], W + 'COSI-COSI/'], ['GitHub', GH + 'COSI-COSI']] },
+  { n: 'NARCO WARS', sub: ['Cyber México', 'Cyber México'], p: ['Estrategia de compra y venta estilo synthwave.', 'Synthwave buy-and-sell strategy game.'],
+    tags: [[['Juego', 'Game']], ['Web', 'w']], links: [[['Jugar', 'Play'], W + 'NARCO-WARS/'], ['GitHub', GH + 'NARCO-WARS']] },
 ];
 
 /* ───────────── i18n ───────────── */
@@ -53,7 +57,7 @@ function renderSoft() {
   const box = $('#soft'); $$('.app', box).forEach(e => e.remove());
   SOFT.forEach((s, i) => {
     const a = document.createElement('article'); a.className = 'app';
-    a.innerHTML = `<span class="idx">/${String(i + 1).padStart(2, '0')}</span><h3>${s.n}</h3><span class="sub mono">${L(s.sub)}</span>
+    a.innerHTML = `<span class="idx">/${String(i + 1).padStart(2, '0')}</span><h3 class="${s.n.length > 8 ? 'long' : ''}">${s.n}</h3><span class="sub mono">${L(s.sub)}</span>
       <div class="tags">${s.tags.map(t => `<span class="tag ${t[1] || ''}">${L(t[0])}</span>`).join('')}</div><p>${L(s.p)}</p>
       <div class="links">${s.links.map(l => `<a href="${l[1]}" target="_blank" rel="noopener">${L(l[0])} ↗</a>`).join('')}</div>`;
     box.appendChild(a);
@@ -441,7 +445,7 @@ function renderVids() {
       d.innerHTML = `<button class="frame" aria-label="Play ${v[lang] || ''}"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"><span class="play"></span></button><div class="cap">${v[lang] || v.es}<small>YouTube // PSL</small></div>`;
       $('.frame', d).onclick = () => { if (running) stopAudio(false); $('.frame', d).outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${v[lang] || ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; };
     } else {
-      d.innerHTML = `<a class="frame" href="https://www.youtube.com/PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
+      d.innerHTML = `<a class="frame" href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
       const c = $('canvas', d); tile(c, i * 5 + 1, true); c.width = 480; c.height = 270; tile2(c, i);
     }
     box.appendChild(d);
