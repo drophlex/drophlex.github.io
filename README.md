@@ -1,6 +1,6 @@
 # Polaris Sound Lab — sitio web
 
-Estudio privado · Mérida, Yucatán, México · **https://drophlex.github.io**
+Estudio privado · Mérida, Yucatán, México · **https://polarissoundlab.com** (también https://drophlex.github.io)
 
 Sitio estático (HTML/CSS/JS, sin dependencias) con **ÓRBITA mini**, un sintetizador generativo en Web Audio que suena desde la primera interacción y se apaga con un clic (o con `Esc`).
 
