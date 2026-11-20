@@ -154,7 +154,11 @@ section{position:relative;border-bottom:var(--line)}
 .vid .frame .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:44px;background:var(--red);display:grid;place-items:center}
 .vid .frame .play::after{content:'';border-left:16px solid var(--paper);border-top:10px solid transparent;border-bottom:10px solid transparent}
 .vid iframe{width:100%;flex:1;min-height:190px;aspect-ratio:16/9;border:0;display:block;background:var(--ink)}
-a.cap{display:block;color:inherit;text-decoration:none}a.cap:hover{color:var(--red)}
+a.cap{display:block;color:inherit;text-decoration:none}
+.vid .igf{background:var(--paper);display:flex;justify-content:center;align-items:flex-start;min-height:190px}
+.vid .igf .instagram-media{margin:0!important;width:100%!important;max-width:540px!important;min-width:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.vid .igf blockquote{padding:18px;font:700 13px/1.3 var(--mono,monospace);text-transform:uppercase}
+.vid .igf iframe{min-height:0;flex:none;aspect-ratio:auto}a.cap:hover{color:var(--red)}
 .vid .cap{padding:12px 14px;font-size:14px;font-weight:700;font-stretch:90%;text-transform:uppercase;line-height:1.15}
 .vid .cap small{display:block;font:400 11px 'Mono';letter-spacing:.1em;color:var(--grey);margin-top:4px}
 .ig{display:flex;flex-direction:column;padding:18px;gap:14px;background:var(--paper2)}
@@ -919,7 +923,7 @@ function renderVids() {
   const box = $('#vids'); box.innerHTML = '';
   const list = VIDEOS.length ? VIDEOS.slice(0, 3) : [
     { es: 'Sesiones en el estudio', en: 'Studio sessions', list: 'PL1AhoIdXL_PPZuYQFF6Wn1OYiWstri4-L', sub: { es: 'Vinyl Sets · Temporada 1', en: 'Vinyl Sets · Season 1' } },
-    { es: 'Vinilo: lavado y aplanado', en: 'Vinyl: wash & flatten' },
+    { es: 'Vinilo: lavado y aplanado', en: 'Vinyl: wash & flatten', ig: 'DYFnhz7u0Zl' },
     { es: 'Radio Polaris', en: 'Radio Polaris', list: 'PLHqU_twuP5y0', sub: { es: 'Sesiones en vivo', en: 'Live sessions' } }];
   list.forEach((v, i) => {
     const d = document.createElement('div'); d.className = 'vid';
@@ -927,6 +931,11 @@ function renderVids() {
       // YouTube's own player shows the playlist cover; the caption links to the whole list
       const url = `https://www.youtube.com/playlist?list=${v.list}`;
       d.innerHTML = `<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=${v.list}&rel=0" title="${v[lang]}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><a class="cap" href="${url}" target="_blank" rel="noopener">${v[lang]} ↗<small>${v.sub[lang]} // ${lang === 'es' ? 'Ver la lista en YouTube' : 'Open the playlist on YouTube'}</small></a>`;
+    } else if (v.ig) {
+      // Instagram reel through Instagram's own embed (it sizes itself); the caption links to the reel
+      const url = `https://www.instagram.com/reel/${v.ig}/`;
+      d.innerHTML = `<div class="frame igf"><blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14"><a href="${url}" target="_blank" rel="noopener">${lang === 'es' ? 'Ver el reel en Instagram' : 'Watch the reel on Instagram'} ↗</a></blockquote></div><a class="cap" href="${url}" target="_blank" rel="noopener">${v[lang]} ↗<small>Instagram // @polaris.sound.lab</small></a>`;
+      setTimeout(igEmbed, 0);
     } else if (v.id) {
       d.innerHTML = `<button class="frame" aria-label="Play ${v[lang] || ''}"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"><span class="play"></span></button><div class="cap">${v[lang] || v.es}<small>YouTube // PSL</small></div>`;
       $('.frame', d).onclick = () => { if (running) stopAudio(false); $('.frame', d).outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${v[lang] || ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; };
@@ -938,6 +947,8 @@ function renderVids() {
   });
 }
 window.addEventListener('blur', () => { setTimeout(() => { const a = document.activeElement; if (a && a.tagName === 'IFRAME' && a.closest('#vids') && running) stopAudio(false); }, 0); });
+function igEmbed() { if (window.instgrm) { window.instgrm.Embeds.process(); return; } if (document.getElementById('igjs')) return;
+  const sc = document.createElement('script'); sc.id = 'igjs'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js'; document.body.appendChild(sc); }
 function tile2(c, i) { const g = c.getContext('2d'), w = c.width, h = c.height; g.fillStyle = INK; g.fillRect(0, 0, w, h); g.strokeStyle = PAPER; g.lineWidth = 1.2;
   for (let k = 0; k < 16; k++) { g.globalAlpha = .3 + k / 24; g.beginPath(); for (let x = 0; x <= w; x += 4) { const u = x / w, y = h / 2 + Math.sin(u * (9 + i * 3) + k * .25) * Math.pow(Math.sin(Math.PI * u), 1.5) * h * .3 * (1 - k / 30) + (k - 8) * 1.4; x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); }
   g.globalAlpha = 1; g.fillStyle = RED; g.font = '700 14px Mono, monospace'; g.fillText('PSL/' + String(i + 1).padStart(3, '0'), 16, 26); }

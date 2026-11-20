@@ -437,7 +437,7 @@ function renderVids() {
   const box = $('#vids'); box.innerHTML = '';
   const list = VIDEOS.length ? VIDEOS.slice(0, 3) : [
     { es: 'Sesiones en el estudio', en: 'Studio sessions', list: 'PL1AhoIdXL_PPZuYQFF6Wn1OYiWstri4-L', sub: { es: 'Vinyl Sets · Temporada 1', en: 'Vinyl Sets · Season 1' } },
-    { es: 'Vinilo: lavado y aplanado', en: 'Vinyl: wash & flatten' },
+    { es: 'Vinilo: lavado y aplanado', en: 'Vinyl: wash & flatten', ig: 'DYFnhz7u0Zl' },
     { es: 'Radio Polaris', en: 'Radio Polaris', list: 'PLHqU_twuP5y0', sub: { es: 'Sesiones en vivo', en: 'Live sessions' } }];
   list.forEach((v, i) => {
     const d = document.createElement('div'); d.className = 'vid';
@@ -445,6 +445,11 @@ function renderVids() {
       // YouTube's own player shows the playlist cover; the caption links to the whole list
       const url = `https://www.youtube.com/playlist?list=${v.list}`;
       d.innerHTML = `<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=${v.list}&rel=0" title="${v[lang]}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><a class="cap" href="${url}" target="_blank" rel="noopener">${v[lang]} ↗<small>${v.sub[lang]} // ${lang === 'es' ? 'Ver la lista en YouTube' : 'Open the playlist on YouTube'}</small></a>`;
+    } else if (v.ig) {
+      // Instagram reel through Instagram's own embed (it sizes itself); the caption links to the reel
+      const url = `https://www.instagram.com/reel/${v.ig}/`;
+      d.innerHTML = `<div class="frame igf"><blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14"><a href="${url}" target="_blank" rel="noopener">${lang === 'es' ? 'Ver el reel en Instagram' : 'Watch the reel on Instagram'} ↗</a></blockquote></div><a class="cap" href="${url}" target="_blank" rel="noopener">${v[lang]} ↗<small>Instagram // @polaris.sound.lab</small></a>`;
+      setTimeout(igEmbed, 0);
     } else if (v.id) {
       d.innerHTML = `<button class="frame" aria-label="Play ${v[lang] || ''}"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"><span class="play"></span></button><div class="cap">${v[lang] || v.es}<small>YouTube // PSL</small></div>`;
       $('.frame', d).onclick = () => { if (running) stopAudio(false); $('.frame', d).outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${v[lang] || ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; };
@@ -456,6 +461,8 @@ function renderVids() {
   });
 }
 window.addEventListener('blur', () => { setTimeout(() => { const a = document.activeElement; if (a && a.tagName === 'IFRAME' && a.closest('#vids') && running) stopAudio(false); }, 0); });
+function igEmbed() { if (window.instgrm) { window.instgrm.Embeds.process(); return; } if (document.getElementById('igjs')) return;
+  const sc = document.createElement('script'); sc.id = 'igjs'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js'; document.body.appendChild(sc); }
 function tile2(c, i) { const g = c.getContext('2d'), w = c.width, h = c.height; g.fillStyle = INK; g.fillRect(0, 0, w, h); g.strokeStyle = PAPER; g.lineWidth = 1.2;
   for (let k = 0; k < 16; k++) { g.globalAlpha = .3 + k / 24; g.beginPath(); for (let x = 0; x <= w; x += 4) { const u = x / w, y = h / 2 + Math.sin(u * (9 + i * 3) + k * .25) * Math.pow(Math.sin(Math.PI * u), 1.5) * h * .3 * (1 - k / 30) + (k - 8) * 1.4; x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); }
   g.globalAlpha = 1; g.fillStyle = RED; g.font = '700 14px Mono, monospace'; g.fillText('PSL/' + String(i + 1).padStart(3, '0'), 16, 26); }
