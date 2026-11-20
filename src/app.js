@@ -70,7 +70,7 @@ const STATIONS = [
 const KEYS = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const PERIODS = [4, 3, 6, 8, 5];           // planet orbit periods in beats
 const PLANET_OCT = [-1, 0, 1, 1, 2];
-const P = { drift: store.get('drift', .35), tone: store.get('tone', .55), speed: store.get('speed', .5), volume: store.get('volume', .7) };
+const P = { drift: store.get('drift', .35), tone: store.get('tone', .55), speed: store.get('speed', .5), volume: store.get('vol', .3) };
 let station = STATIONS.find(s => s.id === store.get('station', 'orbita')) || STATIONS[0];
 let keyOff = store.get('key', -1);         // -1 = station default
 const planets = PERIODS.map((p, i) => ({ period: p, phase: (i * .37) % 1, pat: [0, 2, 4, 1, 3, 5].map(x => (x + i * 2) % 7), n: 0, pan: [-.6, .5, -.2, .7, 0][i] }));
@@ -224,7 +224,8 @@ setInterval(scheduler, 25);
 async function startAudio() {
   wantOn = true; store.set('audio', 'on');
   if (!ctx) buildGraph();
-  if (ctx.state !== 'running') await ctx.resume();
+  if (ctx.state !== 'running') { try { await Promise.race([ctx.resume(), new Promise(r => setTimeout(r, 300))]); } catch {} }
+  if (ctx.state !== 'running') { updateButtons(); return; }
   running = true; ripples.length = 0; nextStep = ctx.currentTime + .06;
   nodes.master.gain.cancelScheduledValues(ctx.currentTime);
   nodes.master.gain.setValueAtTime(nodes.master.gain.value, ctx.currentTime);
@@ -241,19 +242,20 @@ function stopAudio(remember = true) {
 }
 function updateButtons() {
   $('#player').classList.toggle('live', running);
-  const pb = $('#pillBtn'); pb.textContent = running ? (lang === 'es' ? '■ APAGAR' : '■ OFF') : (lang === 'es' ? '▶ TOCAR' : '▶ PLAY'); pb.classList.toggle('off', !running);
+  $('#player').classList.toggle('waiting', !running && wantOn);
 }
 ['#start', '#start2'].forEach(s => $(s).addEventListener('click', startAudio));
 ['#stop', '#stop2'].forEach(s => $(s).addEventListener('click', () => stopAudio()));
-$('#pillBtn').addEventListener('click', () => running ? stopAudio() : startAudio());
 // start with the first interaction anywhere (browsers forbid sound before it), unless the visitor turned it off
 const firstGesture = e => {
   ['pointerdown', 'keydown'].forEach(n => document.removeEventListener(n, firstGesture, true));
   if (store.get('audio', 'on') === 'off' || running) return;
-  if (e.target.closest && e.target.closest('#stop,#stop2,#pillBtn,#lang,.vid,a[href^="http"],a[href^="mailto"]')) return;
+  if (e.target.closest && e.target.closest('#stop,#stop2,.vid')) return;
   startAudio();
 };
 ['pointerdown', 'keydown'].forEach(n => document.addEventListener(n, firstGesture, true));
+// try to start right away (allowed when the browser trusts the site); otherwise it waits for the first touch
+if (store.get('audio', 'on') !== 'off') { wantOn = true; startAudio().catch(() => {}); setTimeout(() => { if (ctx && ctx.state !== 'running') { running = false; updateButtons(); } }, 400); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && running) stopAudio(); });
 
 function setStation(s) {
@@ -274,7 +276,7 @@ function renderKeys() {
 $('#key').addEventListener('change', e => { keyOff = +e.target.value; store.set('key', keyOff); setPadChord(ctx ? ctx.currentTime : 0); });
 
 /* ───────────── knobs ───────────── */
-const KDEF = [['drift', 'DRIFT', 'DERIVA', .35], ['tone', 'TONE', 'TONO', .55], ['speed', 'SPEED', 'VELOC.', .5], ['volume', 'VOLUME', 'VOLUMEN', .7]];
+const KDEF = [['drift', 'DRIFT', 'DERIVA', .35], ['tone', 'TONE', 'TONO', .55], ['speed', 'SPEED', 'VELOC.', .5], ['volume', 'VOLUME', 'VOLUMEN', .3]];
 const knobs = KDEF.map(([key, en, es, def]) => {
   const w = document.createElement('div'); w.className = 'knob'; w.tabIndex = 0; w.setAttribute('role', 'slider'); w.setAttribute('aria-valuemin', 0); w.setAttribute('aria-valuemax', 100);
   w.innerHTML = `<label></label><svg viewBox="0 0 64 64"><circle class="rim" cx="32" cy="32" r="28" fill="none" stroke="${PAPER}" stroke-width="2.5"/><path class="arc" fill="none" stroke="${RED}" stroke-width="3"/><line x1="32" y1="32" x2="32" y2="10" stroke="${PAPER}" stroke-width="4" stroke-linecap="square"/></svg><span class="val"></span>`;
@@ -286,7 +288,7 @@ const knobs = KDEF.map(([key, en, es, def]) => {
       arc.setAttribute('d', v < .01 ? '' : `M${32 + Math.sin(a0) * 28} ${32 - Math.cos(a0) * 28} A28 28 0 ${large} 1 ${32 + Math.sin(r) * 28} ${32 - Math.cos(r) * 28}`);
       val.textContent = String(Math.round(v * 100)).padStart(3, '0'); w.setAttribute('aria-valuenow', Math.round(v * 100)); },
     label() { $('label', w).textContent = lang === 'es' ? es : en; w.setAttribute('aria-label', lang === 'es' ? es : en); },
-    set(v) { P[key] = Math.min(1, Math.max(0, v)); store.set(key, P[key]); k.draw(); applyParams(); },
+    set(v) { P[key] = Math.min(1, Math.max(0, v)); store.set(key === 'volume' ? 'vol' : key, P[key]); k.draw(); applyParams(); },
   };
   let y0 = 0, v0 = 0;
   w.addEventListener('pointerdown', e => { w.setPointerCapture(e.pointerId); y0 = e.clientY; v0 = P[key]; e.preventDefault(); w.focus(); });
@@ -402,7 +404,6 @@ function frame(ms) {
   if (!reduced || running) {
     if (isVis('#orbit')) drawOrbit(t);
     if (isVis('#wave')) drawWave($('#wave'), t, lv, 18, PAPER, false);
-    if ($('#pill').classList.contains('show')) drawWave($('#pillWave'), t, lv, 5, PAPER, true);
     if (isVis('#groove') && (frameN % 2 === 0)) drawGroove(t, lv);
     if (isVis('#stars') && ms - tPrev > 60) { drawStars(t); tPrev = ms; }
     // logo breathes with the sound
@@ -416,8 +417,6 @@ function frame(ms) {
 requestAnimationFrame(frame);
 if (reduced) { drawOrbit(0); drawWave($('#wave'), 0, 0, 18, PAPER, false); drawGroove(0, 0); drawStars(0); }
 
-// pill appears when the main player is off screen
-new IntersectionObserver(([e]) => $('#pill').classList.toggle('show', !e.isIntersecting), { threshold: 0 }).observe($('#player'));
 
 /* generative tiles (Instagram grid, video placeholders) */
 function tile(cv, seed, dark) {
