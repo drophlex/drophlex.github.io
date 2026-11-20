@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Polaris Sound Lab — Estudio privado · Mérida, Yucatán</title>
+<meta name="description" content="Polaris Sound Lab: lavado y aplanado de vinilos, podcast y grabación, mezcla y masterización, asesoría acústica, bocinas Overbuilt y software de audio. Mérida, Yucatán, México.">
+<meta property="og:title" content="Polaris Sound Lab — Sonido en órbita">
+<meta property="og:description" content="Estudio privado en Mérida, Yucatán. Vinilo, grabación, mezcla, master, acústica, bocinas y software.">
+<meta property="og:image" content="assets/og.png">
+<meta name="theme-color" content="#ecebe5">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>/*CSS*/</style>
+</head>
+<body>
+<a class="skip" href="#servicios">Saltar al contenido</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <filter id="glitch"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="2" seed="3"/><feDisplacementMap id="disp" in="SourceGraphic" scale="14"/></filter>
+ <filter id="breath"><feTurbulence id="turb2" type="turbulence" baseFrequency="0.008" numOctaves="1" seed="9"/><feDisplacementMap id="disp2" in="SourceGraphic" scale="0"/></filter>
+</svg>
+
+<header>
+ <div class="bar">
+  <span class="cross l"></span>
+  <a class="brand" href="#inicio" aria-label="Polaris Sound Lab">POLARIS SOUND LAB</a>
+  <span class="tagline mono" data-en="PRIVATE STUDIO // MÉRIDA">ESTUDIO PRIVADO // MÉRIDA</span>
+  <nav aria-label="Principal">
+   <a href="#inicio" class="on" data-en="Home">Inicio</a>
+   <a href="#servicios" data-en="Services">Servicios</a>
+   <a href="#audio">Audio</a>
+   <a href="#software">Software</a>
+   <a href="#radio">Radio</a>
+   <a href="#contacto" data-en="Contact">Contacto</a>
+   <button class="lang" id="lang" aria-label="Change language">EN</button>
+  </nav>
+  <span class="cross r"></span>
+ </div>
+</header>
+
+<main>
+<section id="inicio" style="border-bottom:0">
+ <div class="hero">
+  <div class="side" aria-hidden="true"></div>
+  <div class="logoCell">
+   <svg class="logo" id="logo" viewBox="110 70 900 740" role="img" aria-label="Polaris Sound Lab">
+    <g id="logoG"><path class="grooves" fill="#232325" d="{{grooves}}"/></g>
+    <path class="psl" fill="#ef3340" d="{{psl}}"/>
+    <path fill="#232325" d="{{word}}"/>
+    <path fill="#ef3340" d="{{star}}"/>
+   </svg>
+  </div>
+  <div class="headCell">
+   <h1 class="wide"><span data-en="Sound">Sonido</span><span class="slash" aria-hidden="true"></span><br><span data-en="in orbit">en órbita</span></h1>
+   <div class="kicker mono" data-en="Studio // Production // Vinyl // Software // Audiovisual">Estudio // Producción // Vinilo // Software // Audiovisual</div>
+   <div class="code">
+    <span class="big">PSL / <span class="red">001</span></span>
+    <span class="barcode" aria-hidden="true"></span>
+    <span class="coords mono">20.9674° N<br>89.5926° W</span>
+   </div>
+   <div class="orbitBox" aria-hidden="true">
+    <span class="px"></span>
+    <canvas id="orbit"></canvas>
+    <span class="loc mono">Mérida, Yuc.<br>MX</span>
+    <span class="brk a"></span><span class="brk b"></span>
+   </div>
+  </div>
+ </div>
+ <div class="playerWrap">
+  <div class="player" id="player">
+   <div class="ttl">
+    <b>ÓRBITA <span>MINI</span></b>
+    <small class="mono" data-en="Generative<br>pattern<br>synthesizer<br>PSL lab">Sintetizador<br>generativo<br>de patrones<br>PSL lab</small>
+   </div>
+   <canvas class="wave" id="wave" aria-hidden="true"></canvas>
+   <div class="knobs" id="knobs"></div>
+   <div class="ctrls">
+    <button class="btn go" id="start"><span class="ico"></span><span data-en="Start audio">Iniciar audio</span></button>
+    <button class="btn stop" id="stop"><span class="ico"></span><span data-en="Turn off">Apagar</span></button>
+   </div>
+   <div class="lv" id="lv" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+   <span class="corner" aria-hidden="true"></span>
+  </div>
+ </div>
+</section>
+
+<section id="servicios">
+ <div class="sh rv"><span class="n">01</span><h2 class="wide" data-en="Services">Servicios</h2><div class="meta mono"><span class="jp">サービス</span><span data-en="By appointment only">Solo con cita</span></div></div>
+ <div class="services">
+  <article class="svc rv">
+   <div class="top">
+    <svg viewBox="0 0 90 90" aria-hidden="true"><circle class="fill" cx="45" cy="45" r="42" fill="#0d0d0f"/><g fill="none" stroke="#ecebe5" stroke-width="1"><circle cx="45" cy="45" r="36"/><circle cx="45" cy="45" r="31"/><circle cx="45" cy="45" r="26"/><circle cx="45" cy="45" r="21"/></g><circle cx="45" cy="45" r="11" fill="#ecebe5"/><circle cx="45" cy="45" r="2.5" fill="#0d0d0f"/></svg>
+    <h3 data-en="Vinyl wash &amp; flattening">Limpieza y aplanado de vinilos</h3>
+   </div>
+   <ul class="mono" data-en="<li>Deep wet cleaning</li><li>Warped record flattening</li><li>Archival sleeves</li>"><li>Lavado profundo en húmedo</li><li>Aplanado de discos ondulados</li><li>Fundas de archivo</li></ul>
+   <a class="ask" href="#contacto" data-svc="vinilo" data-en="Request →">Cotizar →</a>
+   <span class="num">/01</span>
+  </article>
+  <article class="svc rv">
+   <div class="top">
+    <svg viewBox="0 0 90 90" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="5"><rect x="30" y="6" width="30" height="50" rx="15"/><path d="M18 40c0 16 12 27 27 27s27-11 27-27M45 67v15M28 84h34"/></g></svg>
+    <h3 data-en="Podcast &amp; recording">Podcast y grabación</h3>
+   </div>
+   <ul class="mono" data-en="<li>Audio / video</li><li>Equipped studio</li><li>End-to-end production</li>"><li>Audio / video</li><li>Estudio equipado</li><li>Producción integral</li></ul>
+   <a class="ask" href="#contacto" data-svc="podcast" data-en="Request →">Cotizar →</a>
+   <span class="num">/02</span>
+  </article>
+  <article class="svc rv">
+   <div class="top">
+    <svg viewBox="0 0 90 90" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="5" stroke-linecap="round"><path d="M18 8v74M45 8v74M72 8v74"/><circle cx="18" cy="56" r="7" fill="#ecebe5"/><circle cx="45" cy="26" r="7" fill="#ecebe5"/><circle cx="72" cy="46" r="7" fill="#ecebe5"/></g></svg>
+    <h3 data-en="Mixing &amp; mastering">Mezcla y masterización</h3>
+   </div>
+   <ul class="mono" data-en="<li>Music / podcast / DJ set</li><li>Stereo and surround</li><li>Release-ready master</li>"><li>Música / podcast / DJ set</li><li>Estéreo y surround</li><li>Master listo para release</li></ul>
+   <a class="ask" href="#contacto" data-svc="mezcla" data-en="Request →">Cotizar →</a>
+   <span class="num">/03</span>
+  </article>
+  <article class="svc rv">
+   <div class="top">
+    <svg viewBox="0 0 90 90" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="4"><rect x="6" y="10" width="78" height="70"/><path d="M20 22c10 8 10 38 0 46M32 18c14 10 14 44 0 54M44 14c18 12 18 50 0 62M56 12c20 14 20 52 0 66"/></g></svg>
+    <h3 data-en="Acoustic consulting">Asesoría acústica</h3>
+   </div>
+   <ul class="mono" data-en="<li>Measurement / analysis</li><li>Room treatment</li><li>Room design</li>"><li>Medición / análisis</li><li>Tratamiento de espacios</li><li>Diseño de salas</li></ul>
+   <a class="ask" href="#contacto" data-svc="acustica" data-en="Request →">Cotizar →</a>
+   <span class="num">/04</span>
+  </article>
+  <article class="svc rv">
+   <div class="top">
+    <svg viewBox="0 0 90 90" aria-hidden="true"><rect class="fill" x="16" y="4" width="58" height="82" rx="6" fill="#0d0d0f"/><g fill="none" stroke="#ecebe5" stroke-width="5"><circle cx="45" cy="26" r="11"/><circle cx="45" cy="60" r="16"/></g><circle cx="45" cy="26" r="3" fill="#ecebe5"/><circle cx="45" cy="60" r="4" fill="#ecebe5"/></svg>
+    <h3 data-en="Overbuilt speakers">Bocinas Overbuilt</h3>
+   </div>
+   <ul class="mono" data-en="<li>Design and build</li><li>Custom systems</li><li>Hi-fi / studio / DJ</li>"><li>Diseño y construcción</li><li>Sistemas a medida</li><li>Hi-fi / estudio / DJ</li></ul>
+   <a class="ask" href="#contacto" data-svc="bocinas" data-en="Request →">Cotizar →</a>
+   <span class="num">/05</span>
+  </article>
+ </div>
+</section>
+
+<section id="audio">
+ <div class="sh rv"><span class="n">02</span><h2 class="wide">Audio</h2><div class="meta mono"><span class="jp">オーディオ</span>YouTube // Instagram</div></div>
+ <div class="media rv">
+  <div class="vids" id="vids"></div>
+  <div class="ig">
+   <div class="grid" id="igGrid" aria-hidden="true"></div>
+   <a class="follow" href="https://www.instagram.com/polaris.sound.lab/" target="_blank" rel="noopener">
+    <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3.5"><rect x="3" y="3" width="38" height="38" rx="10"/><circle cx="22" cy="22" r="9"/></g><circle cx="33" cy="11" r="2.4" fill="#0d0d0f"/></svg>
+    <span>Instagram<small>@polaris.sound.lab</small></span>
+   </a>
+   <p class="mono" style="font-size:11px;margin:0" data-en="Sessions, vinyl, gear and behind the scenes. DMs open for bookings.">Sesiones, vinilo, equipo y detrás de cámaras. DM abierto para citas.</p>
+  </div>
+ </div>
+ <div class="socialRow">
+  <a href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener"><svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span data-en="YouTube channel →">Canal de YouTube →</span></a>
+  <a href="https://www.instagram.com/polaris.sound.lab/" target="_blank" rel="noopener"><span data-en="Follow on Instagram →">Seguir en Instagram →</span></a>
+ </div>
+</section>
+
+<section id="software">
+ <div class="sh rv"><span class="n">03</span><h2 class="wide">Software</h2><div class="meta mono"><span class="jp">ソフトウェア</span>github.com/drophlex</div></div>
+ <div class="soft rv" id="soft">
+  <div class="softHead"><b>Software<br>PSL Lab</b><span class="mono" style="font-size:11px" data-en="Plug-ins, web instruments and FM-1 firmware. Designed by Dark Funk Durcal.">Plug-ins, instrumentos web y firmware FM-1. Diseño de Dark Funk Durcal.</span><span class="arrow">→</span></div>
+ </div>
+</section>
+
+<section id="radio" class="radio">
+ <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+ <div class="copy">
+  <span class="mono red" style="font-size:12px">04 // RADIO PSL <span class="jp">ラジオ</span></span>
+  <h2 class="wide" data-en="Endless<br>radio">Radio<br>infinita</h2>
+  <p data-en="It never repeats: planets orbit and each one plays a note when it crosses the zenith. Pick a station, a key and tweak the knobs on top — the sound follows you through the whole page.">Nunca se repite: los planetas orbitan y cada uno toca una nota al cruzar el cénit. Elige una estación, una tonalidad y ajusta las perillas de arriba — el sonido te acompaña por toda la página.</p>
+  <div class="station" id="station"></div>
+  <div class="keyRow mono"><span data-en="Key">Tono</span><select id="key" aria-label="Key"></select><button class="btn go" id="start2" style="min-width:0;padding:8px 16px;font-size:14px"><span class="ico"></span><span data-en="Play">Tocar</span></button><button class="btn stop" id="stop2" style="min-width:0;padding:8px 16px;font-size:14px"><span class="ico"></span><span data-en="Off">Apagar</span></button></div>
+ </div>
+ <canvas class="groove" id="groove" aria-hidden="true"></canvas>
+</section>
+
+<section id="contacto">
+ <div class="sh rv"><span class="n">05</span><h2 class="wide" data-en="Contact">Contacto</h2><div class="meta mono"><span class="jp">連絡</span><span data-en="E-mail or Instagram only">Solo correo o Instagram</span></div></div>
+ <div class="contact rv">
+  <div class="rules">
+   <div class="big"><span data-en="By appointment only //">Solo con cita //</span><span class="red" data-en="E-mail or Instagram">Correo o Instagram</span></div>
+   <a class="chan" id="mailLink" href="mailto:drophlex@gmail.com"><svg width="40" height="30" viewBox="0 0 40 30" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3"><rect x="2" y="2" width="36" height="26"/><path d="M2 2l18 15L38 2"/></g></svg><span><b data-en="E-mail">Correo</b><small>drophlex@gmail.com</small></span></a>
+   <a class="chan" href="https://ig.me/m/polaris.sound.lab" target="_blank" rel="noopener"><svg width="40" height="40" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3.5"><rect x="3" y="3" width="38" height="38" rx="10"/><circle cx="22" cy="22" r="9"/></g></svg><span><b data-en="Instagram DM">DM de Instagram</b><small>@polaris.sound.lab</small></span></a>
+   <p class="no mono" data-en="No calls · No WhatsApp · No walk-ins<br>Every project starts in writing: tell us what you need and we reply with a date and a quote.">Sin llamadas · Sin WhatsApp · Sin visitas sin cita<br>Todo proyecto empieza por escrito: cuéntanos qué necesitas y respondemos con fecha y cotización.</p>
+  </div>
+  <form id="form" novalidate>
+   <label><span data-en="Name">Nombre</span><input name="name" required autocomplete="name"></label>
+   <label><span data-en="Service">Servicio</span>
+    <select name="svc" id="svcSel">
+     <option value="vinilo" data-en="Vinyl wash &amp; flattening">Limpieza y aplanado de vinilos</option>
+     <option value="podcast" data-en="Podcast &amp; recording">Podcast y grabación</option>
+     <option value="mezcla" data-en="Mixing &amp; mastering">Mezcla y masterización</option>
+     <option value="acustica" data-en="Acoustic consulting">Asesoría acústica</option>
+     <option value="bocinas" data-en="Overbuilt speakers">Bocinas Overbuilt</option>
+     <option value="software" data-en="Software / licences">Software / licencias</option>
+     <option value="otro" data-en="Other">Otro</option>
+    </select></label>
+   <label class="full"><span data-en="Message">Mensaje</span><textarea name="msg" required data-ph-en="Tell us about your project, dates and references." placeholder="Cuéntanos tu proyecto, fechas y referencias."></textarea></label>
+   <div class="sendRow full">
+    <button type="submit" class="mail" data-en="Send by e-mail →">Enviar por correo →</button>
+    <button type="button" class="igb" id="igSend" data-en="Copy &amp; open Instagram">Copiar y abrir Instagram</button>
+   </div>
+   <p class="formNote mono" id="formNote" data-en="Opens your e-mail app with everything filled in.">Abre tu app de correo con todo listo.</p>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer>
+ <span class="cross l"></span>
+ <span class="stripes" aria-hidden="true"></span>
+ <a class="lk" href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener"><svg width="40" height="28" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span>YouTube<br>Polaris Sound Lab</span></a>
+ <a class="lk" href="https://www.instagram.com/polaris.sound.lab/" target="_blank" rel="noopener"><svg width="38" height="38" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3.5"><rect x="3" y="3" width="38" height="38" rx="10"/><circle cx="22" cy="22" r="9"/></g><circle cx="33" cy="11" r="2.4" fill="#0d0d0f"/></svg><span>Instagram<br>@polaris.sound.lab</span></a>
+ <a class="cta" href="#contacto"><span class="arrow">→</span><span data-en="By appointment only //<br>contact by e-mail or Instagram">Solo con cita //<br>contacto por correo o Instagram</span></a>
+ <span class="cross r"></span>
+</footer>
+<div class="legal mono">
+ <span>© <span id="yr">2026</span> Polaris Sound Lab · Mérida, Yucatán, México · <span data-en="Design: Dark Funk Durcal">Diseño: Dark Funk Durcal</span></span>
+ <a class="donate" href="https://www.paypal.com/donate/?business=drophlex%40gmail.com&amp;currency_code=MXN" target="_blank" rel="noopener" data-en="♥ Support the free software (PayPal)">♥ Apoya el software libre (PayPal)</a>
+</div>
+
+<div class="pill" id="pill" role="region" aria-label="Órbita mini">
+ <span class="nm">Órbita mini</span><canvas id="pillWave" width="140" height="52" aria-hidden="true"></canvas>
+ <button id="pillBtn">ON</button>
+</div>
+
+<script>/*JS*/</script>
+</body>
+</html>
