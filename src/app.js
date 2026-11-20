@@ -434,7 +434,7 @@ function renderVids() {
       d.innerHTML = `<button class="frame" aria-label="Play ${v[lang] || ''}"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"><span class="play"></span></button><div class="cap">${v[lang] || v.es}<small>YouTube // PSL</small></div>`;
       $('.frame', d).onclick = () => { if (running) stopAudio(false); $('.frame', d).outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${v[lang] || ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; };
     } else {
-      d.innerHTML = `<a class="frame" href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
+      d.innerHTML = `<a class="frame" href="https://www.youtube.com/PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
       const c = $('canvas', d); tile(c, i * 5 + 1, true); c.width = 480; c.height = 270; tile2(c, i);
     }
     box.appendChild(d);
@@ -460,7 +460,7 @@ function composed() {
 function warn(txt) { const n = $('#formNote'); n.textContent = txt; n.style.color = RED; }
 $('#form').addEventListener('submit', e => { e.preventDefault(); const c = composed();
   if (!c.ok) return warn(lang === 'es' ? 'Escribe tu nombre y tu mensaje.' : 'Please write your name and message.');
-  location.href = `mailto:drophlex@gmail.com?subject=${encodeURIComponent('[PSL] ' + c.svc + ' — ' + c.name)}&body=${encodeURIComponent(c.text)}`; });
+  location.href = `mailto:PolarisSoundLab@gmail.com?subject=${encodeURIComponent('[PSL] ' + c.svc + ' — ' + c.name)}&body=${encodeURIComponent(c.text)}`; });
 $('#igSend').addEventListener('click', async () => { const c = composed();
   if (!c.ok) return warn(lang === 'es' ? 'Escribe tu nombre y tu mensaje.' : 'Please write your name and message.');
   try { await navigator.clipboard.writeText(c.text); } catch {}

@@ -410,7 +410,7 @@ footer .cross.l{left:16px;top:14px}footer .cross.r{right:16px;top:14px}
   </div>
  </div>
  <div class="socialRow">
-  <a href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener"><svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span data-en="YouTube channel →">Canal de YouTube →</span></a>
+  <a href="https://www.youtube.com/PolarisSoundLab" target="_blank" rel="noopener"><svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span data-en="YouTube channel →">Canal de YouTube →</span></a>
   <a href="https://www.instagram.com/polaris.sound.lab/" target="_blank" rel="noopener"><span data-en="Follow on Instagram →">Seguir en Instagram →</span></a>
  </div>
 </section>
@@ -439,7 +439,7 @@ footer .cross.l{left:16px;top:14px}footer .cross.r{right:16px;top:14px}
  <div class="contact rv">
   <div class="rules">
    <div class="big"><span data-en="By appointment only //">Solo con cita //</span><span class="red" data-en="E-mail or Instagram">Correo o Instagram</span></div>
-   <a class="chan" id="mailLink" href="mailto:drophlex@gmail.com"><svg width="40" height="30" viewBox="0 0 40 30" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3"><rect x="2" y="2" width="36" height="26"/><path d="M2 2l18 15L38 2"/></g></svg><span><b data-en="E-mail">Correo</b><small>drophlex@gmail.com</small></span></a>
+   <a class="chan" id="mailLink" href="mailto:PolarisSoundLab@gmail.com"><svg width="40" height="30" viewBox="0 0 40 30" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3"><rect x="2" y="2" width="36" height="26"/><path d="M2 2l18 15L38 2"/></g></svg><span><b data-en="E-mail">Correo</b><small>PolarisSoundLab@gmail.com</small></span></a>
    <a class="chan" href="https://ig.me/m/polaris.sound.lab" target="_blank" rel="noopener"><svg width="40" height="40" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3.5"><rect x="3" y="3" width="38" height="38" rx="10"/><circle cx="22" cy="22" r="9"/></g></svg><span><b data-en="Instagram DM">DM de Instagram</b><small>@polaris.sound.lab</small></span></a>
    <p class="no mono" data-en="No calls · No WhatsApp · No walk-ins<br>Every project starts in writing: tell us what you need and we reply with a date and a quote.">Sin llamadas · Sin WhatsApp · Sin visitas sin cita<br>Todo proyecto empieza por escrito: cuéntanos qué necesitas y respondemos con fecha y cotización.</p>
   </div>
@@ -469,7 +469,7 @@ footer .cross.l{left:16px;top:14px}footer .cross.r{right:16px;top:14px}
 <footer>
  <span class="cross l"></span>
  <span class="stripes" aria-hidden="true"></span>
- <a class="lk" href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener"><svg width="40" height="28" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span>YouTube<br>Polaris Sound Lab</span></a>
+ <a class="lk" href="https://www.youtube.com/PolarisSoundLab" target="_blank" rel="noopener"><svg width="40" height="28" viewBox="0 0 34 24" aria-hidden="true"><rect width="34" height="24" rx="6" fill="#0d0d0f"/><path d="M13 6l10 6-10 6z" fill="#ecebe5"/></svg><span>YouTube<br>Polaris Sound Lab</span></a>
  <a class="lk" href="https://www.instagram.com/polaris.sound.lab/" target="_blank" rel="noopener"><svg width="38" height="38" viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="#0d0d0f" stroke-width="3.5"><rect x="3" y="3" width="38" height="38" rx="10"/><circle cx="22" cy="22" r="9"/></g><circle cx="33" cy="11" r="2.4" fill="#0d0d0f"/></svg><span>Instagram<br>@polaris.sound.lab</span></a>
  <a class="cta" href="#contacto"><span class="arrow">→</span><span data-en="By appointment only //<br>contact by e-mail or Instagram">Solo con cita //<br>contacto por correo o Instagram</span></a>
  <span class="cross r"></span>
@@ -920,7 +920,7 @@ function renderVids() {
       d.innerHTML = `<button class="frame" aria-label="Play ${v[lang] || ''}"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"><span class="play"></span></button><div class="cap">${v[lang] || v.es}<small>YouTube // PSL</small></div>`;
       $('.frame', d).onclick = () => { if (running) stopAudio(false); $('.frame', d).outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0" title="${v[lang] || ''}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; };
     } else {
-      d.innerHTML = `<a class="frame" href="https://www.youtube.com/@PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
+      d.innerHTML = `<a class="frame" href="https://www.youtube.com/PolarisSoundLab" target="_blank" rel="noopener" aria-label="YouTube"><canvas></canvas><span class="play"></span></a><div class="cap">${v[lang]}<small>${lang === 'es' ? 'Ver en el canal' : 'Watch on the channel'} // ${String(i + 1).padStart(2, '0')}</small></div>`;
       const c = $('canvas', d); tile(c, i * 5 + 1, true); c.width = 480; c.height = 270; tile2(c, i);
     }
     box.appendChild(d);
@@ -946,7 +946,7 @@ function composed() {
 function warn(txt) { const n = $('#formNote'); n.textContent = txt; n.style.color = RED; }
 $('#form').addEventListener('submit', e => { e.preventDefault(); const c = composed();
   if (!c.ok) return warn(lang === 'es' ? 'Escribe tu nombre y tu mensaje.' : 'Please write your name and message.');
-  location.href = `mailto:drophlex@gmail.com?subject=${encodeURIComponent('[PSL] ' + c.svc + ' — ' + c.name)}&body=${encodeURIComponent(c.text)}`; });
+  location.href = `mailto:PolarisSoundLab@gmail.com?subject=${encodeURIComponent('[PSL] ' + c.svc + ' — ' + c.name)}&body=${encodeURIComponent(c.text)}`; });
 $('#igSend').addEventListener('click', async () => { const c = composed();
   if (!c.ok) return warn(lang === 'es' ? 'Escribe tu nombre y tu mensaje.' : 'Please write your name and message.');
   try { await navigator.clipboard.writeText(c.text); } catch {}
