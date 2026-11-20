@@ -155,7 +155,7 @@ section{position:relative;border-bottom:var(--line)}
 /* radio */
 .radio{background:var(--ink);color:var(--paper);display:grid;grid-template-columns:1.1fr 1fr;min-height:540px;overflow:hidden}
 .radio .sh{border-color:#333}
-.radio canvas.groove{width:100%;height:100%;display:block;image-rendering:pixelated;min-height:420px}
+.radio canvas.groove{width:100%;height:100%;display:block;min-height:420px}
 .radio .copy{padding:34px 34px 34px 84px;display:flex;flex-direction:column;gap:16px;position:relative}
 .radio h2{font-size:clamp(40px,5vw,76px);margin:0}
 .radio p{color:#d7d7d7;max-width:520px;margin:0}
@@ -167,7 +167,7 @@ section{position:relative;border-bottom:var(--line)}
 .station button.on span{color:var(--ink)}
 .keyRow{display:flex;gap:10px;align-items:center;font-size:12px}
 .keyRow select{background:var(--ink);color:var(--paper);border:1.5px solid #555;font:700 12px 'Mono';padding:6px}
-.radio .stars{position:absolute;inset:0;pointer-events:none;opacity:.6}
+.radio .stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6}
 
 /* contact */
 .contact{display:grid;grid-template-columns:1fr 1.1fr;margin:22px;border:var(--line)}

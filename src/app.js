@@ -31,10 +31,6 @@ const SOFT = [
     tags: [['Open source'], ['VST3', 'w']], links: [['GitHub', GH + 'dfd-synth-plugin']] },
   { n: 'POLARIS ACÚSTICA', sub: ['Medición y análisis', 'Measurement & analysis'], p: ['App de medición acústica de salas: la herramienta de nuestra asesoría.', 'Room acoustic measurement app: the tool behind our consulting.'],
     tags: [['Open source'], ['App', 'w']], links: [['Web', W + 'polaris-acustica/'], ['GitHub', GH + 'polaris-acustica']] },
-  { n: 'COSI COSI', sub: ['Juego de sigilo', 'Stealth game'], p: ['El agente secreto más viral de Mérida.', 'Mérida’s most viral secret agent.'],
-    tags: [[['Juego', 'Game']], ['Web', 'w']], links: [[['Jugar', 'Play'], W + 'COSI-COSI/'], ['GitHub', GH + 'COSI-COSI']] },
-  { n: 'NARCO WARS', sub: ['Cyber México', 'Cyber México'], p: ['Estrategia de compra y venta estilo synthwave.', 'Synthwave buy-and-sell strategy game.'],
-    tags: [[['Juego', 'Game']], ['Web', 'w']], links: [[['Jugar', 'Play'], W + 'NARCO-WARS/'], ['GitHub', GH + 'NARCO-WARS']] },
 ];
 
 /* ───────────── i18n ───────────── */
@@ -363,33 +359,35 @@ function drawWave(cv, t, lv, n, color, compact) {
   if (!compact) { g.strokeStyle = PAPER; g.lineWidth = 1.5 * DPR; const px = w * .06; g.beginPath(); g.moveTo(px - 10 * DPR, mid); g.lineTo(px + 10 * DPR, mid); g.moveTo(px, mid - 10 * DPR); g.lineTo(px, mid + 10 * DPR); g.stroke(); }
 }
 
-// groove / fingerprint / digital — rendered at low resolution and scaled up pixelated
-const gLow = document.createElement('canvas');
+// groove / fingerprint / vinyl — drawn at full resolution
 function drawGroove(t, lv) {
-  const cv = $('#groove'), [w, h] = fit(cv, 1), s = Math.max(120, Math.round(Math.min(w, h) / 3.2));
-  gLow.width = Math.round(s * w / Math.min(w, h)); gLow.height = Math.round(s * h / Math.min(w, h));
-  const g = gLow.getContext('2d'), W = gLow.width, H = gLow.height, cx = W / 2, cy = H / 2, now = clock();
-  g.fillStyle = INK; g.fillRect(0, 0, W, H);
-  const rot = t * .35, Rm = Math.min(W, H) * .47;
-  let hit = 0; ripples.forEach(r => { const a = now - r.t; if (a >= 0 && a < .4) hit = Math.max(hit, 1 - a / .4); });
-  g.lineWidth = 1;
-  for (let r = Rm * .2, k = 0; r < Rm; r += 2.6, k++) {
-    g.strokeStyle = (k % 9 === 4 && hit > .2) ? RED : PAPER; g.globalAlpha = .55 + .45 * (k % 2);
+  const cv = $('#groove'), [w, h] = fit(cv), g = cv.getContext('2d'), now = clock();
+  const cx = w / 2, cy = h / 2, Rm = Math.min(w, h) * .46, rot = t * .35;
+  g.fillStyle = INK; g.fillRect(0, 0, w, h);
+  let hit = 0; ripples.forEach(r => { const a = now - r.t; if (a >= 0 && a < .45) hit = Math.max(hit, 1 - a / .45); });
+  const rings = 64, step = Rm * .8 / rings, k2 = DPR;
+  g.lineWidth = 1.15 * k2; g.lineJoin = 'round';
+  for (let k = 0; k < rings; k++) {
+    const r = Rm * .2 + k * step, red = (k % 9 === 4 && hit > .15);
+    g.strokeStyle = red ? RED : PAPER; g.globalAlpha = red ? .5 + hit * .5 : (.5 + .45 * (k % 2));
     g.beginPath();
-    for (let a = 0; a <= Math.PI * 2 + .01; a += .05) {
-      const wob = Math.sin(a * 5 + rot * 2 + r * .09) * (1.2 + lv * 7) + Math.sin(a * 11 - t + k * .4) * (.5 + P.drift * 2.4) + Math.sin(a * 2 + r * .05 + t * .2) * 2.2;
-      const rr = r + wob, x = cx + Math.cos(a + rot) * rr, y = cy + Math.sin(a + rot) * rr * .98;
-      a ? g.lineTo(x, y) : g.moveTo(x, y);
+    const n = Math.max(90, Math.round(r / (2.2 * k2)));
+    for (let s = 0; s <= n; s++) {
+      const a = s / n * Math.PI * 2;
+      const wob = (Math.sin(a * 5 + rot * 2 + r / step * .25) * (1 + lv * 6) + Math.sin(a * 11 - t + k * .4) * (.4 + P.drift * 2) + Math.sin(a * 2 + k * .13 + t * .2) * 1.8) * step * .9;
+      const rr = r + wob, x = cx + Math.cos(a + rot) * rr, y = cy + Math.sin(a + rot) * rr;
+      s ? g.lineTo(x, y) : g.moveTo(x, y);
     }
-    g.stroke();
+    g.closePath(); g.stroke();
   }
-  g.globalAlpha = 1; g.fillStyle = RED; g.beginPath(); g.arc(cx, cy, Rm * .18, 0, Math.PI * 2); g.fill();
-  g.fillStyle = PAPER; g.font = `900 ${Math.round(Rm * .12)}px Archivo`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PSL', cx, cy);
-  if (hit > .3 || Math.random() < .01) { // digital slip
-    const y0 = Math.floor(Math.random() * H * .8), hh = 2 + Math.floor(Math.random() * 8), dx = Math.round((Math.random() - .5) * 18 * (hit + .3));
-    g.drawImage(gLow, 0, y0, W, hh, dx, y0, W, hh);
+  g.globalAlpha = 1; g.fillStyle = RED; g.beginPath(); g.arc(cx, cy, Rm * .17, 0, Math.PI * 2); g.fill();
+  g.fillStyle = INK; g.beginPath(); g.arc(cx, cy, Rm * .012 + 2, 0, Math.PI * 2); g.fill();
+  g.fillStyle = PAPER; g.font = `900 ${Math.round(Rm * .1)}px Archivo`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PSL', cx, cy - Rm * .075);
+  g.font = `700 ${Math.round(Rm * .028)}px Mono, monospace`; g.fillText('33⅓ · RADIO', cx, cy + Rm * .07);
+  if (hit > .55) { // brief digital slip on a note
+    const y0 = Math.floor(cy - Rm + Math.random() * Rm * 2), hh = Math.round((3 + Math.random() * 10) * k2), dx = Math.round((Math.random() - .5) * 26 * k2);
+    g.drawImage(cv, 0, y0, w, hh, dx, y0, w, hh);
   }
-  const c = cv.getContext('2d'); c.imageSmoothingEnabled = false; c.drawImage(gLow, 0, 0, w, h);
 }
 const starField = Array.from({ length: 220 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() < .08 ? 2 : 1, p: Math.random() * 6 }));
 function drawStars(t) {
