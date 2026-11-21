@@ -27,9 +27,9 @@ const SOFT = [
     tags: [['US$39', 'c'], [['Prueba 30 días', '30-day trial'], 'w']], links: [['Web', W + 'CONSTELLATION/'], [['Descargar', 'Download'], GH + 'CONSTELLATION/releases/latest'], ['GitHub', GH + 'CONSTELLATION']] },
   { n: 'DARK FUNK DURCAL', man: [GH + 'dark-funk-durcal-synt-fm1/blob/main/manual/DarkFunkDurcal-Manual-ES.pdf', GH + 'dark-funk-durcal-synt-fm1/blob/main/manual/DarkFunkDurcal-Manual-EN.pdf'], sub: ['Groovebox FM-1', 'FM-1 groovebox'], p: ['Groovebox gratis para el navegador, el M-VAVE FM-1 y Ableton.', 'Free groovebox for your browser, the M-VAVE FM-1 and Ableton.'],
     tags: [['Open source'], ['Web · FM-1', 'w']], links: [['Web', W + 'dark-funk-durcal-synt-fm1/'], ['GitHub', GH + 'dark-funk-durcal-synt-fm1']] },
-  { n: 'DFD SYNTH', sub: ['Plug-in de síntesis', 'Synth plug-in'], p: ['El sinte de Dark Funk Durcal como plug-in.', 'The Dark Funk Durcal synth as a plug-in.'],
+  { n: 'DFD SYNTH', man: [GH + 'dfd-synth-plugin/blob/main/manual/DarkFunkDurcal-Plugin-Manual-ES.pdf', GH + 'dfd-synth-plugin/blob/main/manual/DarkFunkDurcal-Plugin-Manual-EN.pdf'], sub: ['Plug-in de síntesis', 'Synth plug-in'], p: ['El sinte de Dark Funk Durcal como plug-in.', 'The Dark Funk Durcal synth as a plug-in.'],
     tags: [['Open source'], ['VST3', 'w']], links: [['GitHub', GH + 'dfd-synth-plugin']] },
-  { n: 'POLARIS ACÚSTICA', sub: ['Medición y análisis', 'Measurement & analysis'], p: ['App de medición acústica de salas: la herramienta de nuestra asesoría.', 'Room acoustic measurement app: the tool behind our consulting.'],
+  { n: 'POLARIS ACÚSTICA', man: [GH + 'polaris-acustica/blob/main/manual/PolarisAcustica-Manual-ES.pdf', GH + 'polaris-acustica/blob/main/manual/PolarisAcustica-Manual-EN.pdf'], sub: ['Medición y análisis', 'Measurement & analysis'], p: ['App de medición acústica de salas: la herramienta de nuestra asesoría.', 'Room acoustic measurement app: the tool behind our consulting.'],
     tags: [['Open source'], ['App', 'w']], links: [['Web', W + 'polaris-acustica/'], ['GitHub', GH + 'polaris-acustica']] },
 ];
 
