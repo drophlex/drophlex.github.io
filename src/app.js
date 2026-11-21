@@ -13,19 +13,19 @@ const VIDEOS = [
 ];
 const GH = 'https://github.com/drophlex/', W = 'https://drophlex.github.io/';
 const SOFT = [
-  { n: 'ÓRBITA', sub: ['Sintetizador generativo', 'Generative synthesizer'], p: ['Planetas que tocan notas al orbitar. La radio de esta página es su versión mini.', 'Planets that play notes as they orbit. This page’s radio is its mini version.'],
+  { n: 'ÓRBITA', man: [GH + 'ORBITA/blob/main/docs/ORBITA-Web-Manual-ES.pdf', GH + 'ORBITA/blob/main/docs/ORBITA-Web-Manual-EN.pdf'], sub: ['Sintetizador generativo', 'Generative synthesizer'], p: ['Planetas que tocan notas al orbitar. La radio de esta página es su versión mini.', 'Planets that play notes as they orbit. This page’s radio is its mini version.'],
     tags: [['Open source'], ['Web · VST3 · FM-1', 'w']], links: [['Web', 'https://drophlex.github.io/ORBITA/'], ['GitHub', GH + 'ORBITA']] },
-  { n: 'ANDRÓMEDA', sub: ['Texturas y espacios', 'Textures & spaces'], p: ['Instrumento ambient con eco de cinta Space Tape y visuales de arte matemático.', 'Ambient instrument with Space Tape echo and mathematical-art visuals.'],
+  { n: 'ANDRÓMEDA', man: [GH + 'ANDROMEDA/blob/main/manual/ANDROMEDA-Manual-ES.pdf', GH + 'ANDROMEDA/blob/main/manual/ANDROMEDA-Manual-EN.pdf'], sub: ['Texturas y espacios', 'Textures & spaces'], p: ['Instrumento ambient con eco de cinta Space Tape y visuales de arte matemático.', 'Ambient instrument with Space Tape echo and mathematical-art visuals.'],
     tags: [['Open source'], ['Web · VST · FM-1', 'w']], links: [['Web', 'https://drophlex.github.io/ANDROMEDA/'], ['GitHub', GH + 'ANDROMEDA'], ['FM-1', GH + 'ANDROMEDAFM1']] },
-  { n: 'PULSAR', sub: ['Ritmo / secuencia / FX', 'Rhythm / sequence / FX'], p: ['Caja de ritmos de breaks e IDM.', 'Breaks and IDM drum machine.'],
+  { n: 'PULSAR', man: [GH + 'PULSAR/blob/main/manual/PULSAR-Manual-ES.pdf', GH + 'PULSAR/blob/main/manual/PULSAR-Manual-EN.pdf'], sub: ['Ritmo / secuencia / FX', 'Rhythm / sequence / FX'], p: ['Caja de ritmos de breaks e IDM.', 'Breaks and IDM drum machine.'],
     tags: [['Open source'], ['Web · VST · FM-1', 'w']], links: [['Web', W + 'PULSAR/'], ['GitHub', GH + 'PULSAR']] },
-  { n: 'DFD ACID', sub: ['Sintetizador acid', 'Acid synthesizer'], p: ['Sinte y secuenciador acid con slides y acentos.', 'Acid synth and sequencer with slides and accents.'],
+  { n: 'DFD ACID', man: [GH + 'DFD-ACID-ENGINE/blob/main/manual/DFD-ACID-ENGINE-Web-Manual-ES.pdf', GH + 'DFD-ACID-ENGINE/blob/main/manual/DFD-ACID-ENGINE-Web-Manual-EN.pdf'], sub: ['Sintetizador acid', 'Acid synthesizer'], p: ['Sinte y secuenciador acid con slides y acentos.', 'Acid synth and sequencer with slides and accents.'],
     tags: [['Lab'], ['Web · VST3 · AU · FM-1', 'w']], links: [['Web', W + 'DFD-ACID-ENGINE/'], ['GitHub', GH + 'DFD-ACID-ENGINE']] },
-  { n: 'OMEGA', sub: ['Master / mix bus', 'Master / mix bus'], p: ['Procesador de mastering con loudness BS.1770, pico real y A/B honesto al mismo volumen.', 'Mastering processor with BS.1770 loudness, true peak and honest level-matched A/B.'],
+  { n: 'OMEGA', man: [GH + 'OMEGA/blob/main/manual/Omega-Manual-ES.pdf', GH + 'OMEGA/blob/main/manual/Omega-Manual-EN.pdf'], sub: ['Master / mix bus', 'Master / mix bus'], p: ['Procesador de mastering con loudness BS.1770, pico real y A/B honesto al mismo volumen.', 'Mastering processor with BS.1770 loudness, true peak and honest level-matched A/B.'],
     tags: [['US$49', 'c'], [['Prueba 15 días', '15-day trial'], 'w']], links: [['Web', W + 'OMEGA/'], [['Descargar', 'Download'], GH + 'OMEGA/releases/latest'], ['GitHub', GH + 'OMEGA']] },
-  { n: 'CONSTELLATION', sub: ['Mezclador 3D / surround', '3D mixer / surround'], p: ['Mezcla moviendo estrellas: desenmascarado espectral, binaural y surround hasta 7.1.4.', 'Mix by moving stars: spectral unmasking, binaural and surround up to 7.1.4.'],
+  { n: 'CONSTELLATION', man: [GH + 'CONSTELLATION/blob/main/manual/Constellation-Manual-ES.pdf', GH + 'CONSTELLATION/blob/main/manual/Constellation-Manual-EN.pdf'], sub: ['Mezclador 3D / surround', '3D mixer / surround'], p: ['Mezcla moviendo estrellas: desenmascarado espectral, binaural y surround hasta 7.1.4.', 'Mix by moving stars: spectral unmasking, binaural and surround up to 7.1.4.'],
     tags: [['US$39', 'c'], [['Prueba 30 días', '30-day trial'], 'w']], links: [['Web', W + 'CONSTELLATION/'], [['Descargar', 'Download'], GH + 'CONSTELLATION/releases/latest'], ['GitHub', GH + 'CONSTELLATION']] },
-  { n: 'DARK FUNK DURCAL', sub: ['Groovebox FM-1', 'FM-1 groovebox'], p: ['Groovebox gratis para el navegador, el M-VAVE FM-1 y Ableton.', 'Free groovebox for your browser, the M-VAVE FM-1 and Ableton.'],
+  { n: 'DARK FUNK DURCAL', man: [GH + 'dark-funk-durcal-synt-fm1/blob/main/manual/DarkFunkDurcal-Manual-ES.pdf', GH + 'dark-funk-durcal-synt-fm1/blob/main/manual/DarkFunkDurcal-Manual-EN.pdf'], sub: ['Groovebox FM-1', 'FM-1 groovebox'], p: ['Groovebox gratis para el navegador, el M-VAVE FM-1 y Ableton.', 'Free groovebox for your browser, the M-VAVE FM-1 and Ableton.'],
     tags: [['Open source'], ['Web · FM-1', 'w']], links: [['Web', W + 'dark-funk-durcal-synt-fm1/'], ['GitHub', GH + 'dark-funk-durcal-synt-fm1']] },
   { n: 'DFD SYNTH', sub: ['Plug-in de síntesis', 'Synth plug-in'], p: ['El sinte de Dark Funk Durcal como plug-in.', 'The Dark Funk Durcal synth as a plug-in.'],
     tags: [['Open source'], ['VST3', 'w']], links: [['GitHub', GH + 'dfd-synth-plugin']] },
@@ -43,7 +43,7 @@ function applyLang() {
     el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.es;
   });
   $$('[data-ph-en]').forEach(el => { if (!el.dataset.phEs) el.dataset.phEs = el.placeholder; el.placeholder = lang === 'en' ? el.dataset.phEn : el.dataset.phEs; });
-  $('#lang').textContent = lang === 'es' ? 'EN' : 'ES';
+  $$('#lang [data-l]').forEach(e => e.classList.toggle('on', e.dataset.l === lang)); $('#lang').setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a español');
   renderSoft(); renderVids(); renderStations(); knobs.forEach(k => k.label());
   updateButtons();
 }
@@ -55,7 +55,8 @@ function renderSoft() {
     const a = document.createElement('article'); a.className = 'app';
     a.innerHTML = `<span class="idx">/${String(i + 1).padStart(2, '0')}</span><h3 class="${s.n.length > 8 ? 'long' : ''}">${s.n}</h3><span class="sub mono">${L(s.sub)}</span>
       <div class="tags">${s.tags.map(t => `<span class="tag ${t[1] || ''}">${L(t[0])}</span>`).join('')}</div><p>${L(s.p)}</p>
-      <div class="links">${s.links.map(l => `<a href="${l[1]}" target="_blank" rel="noopener">${L(l[0])} ↗</a>`).join('')}</div>`;
+      <div class="links">${s.links.map(l => `<a href="${l[1]}" target="_blank" rel="noopener">${L(l[0])} ↗</a>`).join('')}</div>${s.man ? `
+      <div class="links man">${(lang === 'es' ? [0, 1] : [1, 0]).map(k => `<a href="${s.man[k]}" target="_blank" rel="noopener" lang="${k ? 'en' : 'es'}">Manual ${k ? 'EN' : 'ES'} ↗</a>`).join('')}</div>` : ''}`;
     box.appendChild(a);
   });
 }
